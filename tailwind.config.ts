@@ -11,6 +11,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "primary-orange": "#FF5722",
+      },
+      fontFamily: {
+        satoshi: ["Satoshi", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },

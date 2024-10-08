@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/Nav";
+import Provider from "@/components/Provider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -25,11 +21,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <Provider>
+        <body className={`${inter.variable}  antialiased`}>
+          <header>
+            <Nav />
+          </header>
+
+          <div className="fixed w-full min-h-[100vh] bg-gray-300 flex justify-center">
+            <div className="gradient" />
+          </div>
+          <main className="app">{children}</main>
+        </body>
+      </Provider>
     </html>
   );
 }
