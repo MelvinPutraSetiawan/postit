@@ -33,7 +33,7 @@ function Nav() {
     <nav className="flex-between w-full pb-4 pt-3 bg-white">
       <Link href={"/"} className="flex gap-2 flex-center">
         <Image
-          src={"/assets/images/logo.svg"}
+          src={"/assets/images/logo.png"}
           alt="Logo"
           width={30}
           height={30}
@@ -44,7 +44,7 @@ function Nav() {
       <div className="hidden sm:flex">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href={"/create-new"} className="black_btn">
+            <Link href={"/create-post"} className="black_btn">
               Create Post
             </Link>
 
@@ -106,7 +106,7 @@ function Nav() {
                   My Profile
                 </Link>
                 <Link
-                  href={"/create-new"}
+                  href={"/create-post"}
                   className="dropdown_link text-center w-full"
                   onClick={() => setToggleDropDown(false)}
                 >
