@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
+import Image from "next/image";
 
 interface Post {
   post: string;
@@ -64,7 +65,12 @@ const UpdatePrompt = () => {
   if (status === "loading") {
     return (
       <p className="text-3xl font-bold flex justify-center items-center text-gray-500 h-[80vh]">
-        Loading...
+        <Image
+          src={"./assets/icons/loader.svg"}
+          alt="loading"
+          width={100}
+          height={100}
+        />
       </p>
     );
   }

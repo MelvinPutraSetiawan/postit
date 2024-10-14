@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Form from "@/components/Form";
+import Image from "next/image";
 
 const CreatePost = () => {
   const { data: session, status } = useSession();
@@ -50,7 +51,12 @@ const CreatePost = () => {
   if (status === "loading") {
     return (
       <p className="text-3xl font-bold flex justify-center items-center text-gray-500 h-[80vh]">
-        Loading...
+        <Image
+          src={"./assets/icons/loader.svg"}
+          alt="loading"
+          width={100}
+          height={100}
+        />
       </p>
     );
   }
