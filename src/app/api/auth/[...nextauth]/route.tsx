@@ -18,7 +18,7 @@ const handler = NextAuth({
       session.user.id = sessionUser._id.toString();
       return session;
     },
-    async signIn({ profile, account }) {
+    async signIn({ profile }) {
       try {
         await connectToDB();
         const userExist = await User.findOne({ email: profile?.email });
@@ -27,9 +27,11 @@ const handler = NextAuth({
           await User.create({
             email: profile?.email,
             username: profile?.name?.replace(" ", "").toLowerCase(),
-            image: account?.picture,
+            image: profile?.picture as string,
           });
         }
+        console.log("Profile img1: ", profile?.image, "-----");
+        console.log("Profile img2: ", profile?.picture, "-----");
         return true;
       } catch (error) {
         console.log(error);
