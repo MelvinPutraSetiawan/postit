@@ -1,3 +1,4 @@
+"use client";
 import Posts from "@/components/Posts";
 
 function Home() {

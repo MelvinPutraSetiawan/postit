@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
@@ -12,7 +12,7 @@ interface Post {
 }
 
 const UpdatePrompt = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
@@ -93,4 +93,10 @@ const UpdatePrompt = () => {
   );
 };
 
-export default UpdatePrompt;
+const UpdatePromptPage: React.FC = () => (
+  <Suspense fallback={<div>Loading page...</div>}>
+    <UpdatePrompt />
+  </Suspense>
+);
+
+export default UpdatePromptPage;

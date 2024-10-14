@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import PostCard from "./PostCard";
 
 interface Creator {
@@ -50,6 +50,22 @@ function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
+  const fetchPosts = useCallback(async () => {
+    try {
+      const response = await fetch("/api/post", {
+        headers: { "Cache-Control": "no-store" },
+      });
+      const data: Post[] = await response.json();
+      setPosts(data);
+      setFilteredPosts(data);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    }
+  }, []);
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchText(value);
@@ -70,21 +86,21 @@ function Posts() {
 
   const handleEdit = (post: Post) => {
     console.log(`Edit post with ID: ${post._id}`);
-  };
-
-  const handleDelete = (post: Post) => {
-    console.log(`Delete post with ID: ${post._id}`);
-  };
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/post");
-      const data: Post[] = await response.json();
-      setPosts(data);
-      setFilteredPosts(data);
-    };
     fetchPosts();
-  }, []);
+  };
+
+  const handleDelete = async (post: Post) => {
+    console.log(`Delete post with ID: ${post._id}`);
+    try {
+      await fetch(`/api/post/${post._id.toString()}`, {
+        method: "DELETE",
+      });
+      setPosts((prev) => prev.filter((item) => item._id !== post._id));
+      setFilteredPosts((prev) => prev.filter((item) => item._id !== post._id));
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
+  };
 
   return (
     <section className="feed">

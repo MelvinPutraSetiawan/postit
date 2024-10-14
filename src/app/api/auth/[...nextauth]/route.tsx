@@ -27,11 +27,9 @@ const handler = NextAuth({
           await User.create({
             email: profile?.email,
             username: profile?.name?.replace(" ", "").toLowerCase(),
-            image: profile?.picture as string,
+            image: (profile as unknown as { picture?: string }).picture || "",
           });
         }
-        console.log("Profile img1: ", profile?.image, "-----");
-        console.log("Profile img2: ", profile?.picture, "-----");
         return true;
       } catch (error) {
         console.log(error);
