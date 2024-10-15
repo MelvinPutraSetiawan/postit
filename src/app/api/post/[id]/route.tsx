@@ -24,7 +24,7 @@ export const PATCH = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    const { post, tag } = await request.json(); 
+    const { post, tag } = await request.json();
     await connectToDB();
 
     const existingPost = await Post.findById(params.id);
@@ -36,6 +36,12 @@ export const PATCH = async (
     existingPost.tag = tag;
 
     await existingPost.save();
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: "/" }),
+    });
 
     return new NextResponse("Successfully updated the post", { status: 200 });
   } catch (error) {
@@ -52,6 +58,12 @@ export const DELETE = async (
     await connectToDB();
 
     await Post.findByIdAndDelete(params.id);
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: "/" }),
+    });
 
     return new NextResponse("Post deleted successfully", { status: 200 });
   } catch (error) {
