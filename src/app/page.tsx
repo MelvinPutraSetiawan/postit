@@ -1,27 +1,36 @@
 "use client";
+import { useEffect, useState } from "react";
 import Posts from "@/components/Posts";
 
-async function getPosts() {
-  const response = await fetch("/api/post", {
-    cache: "no-store",
-  });
+export default function Home() {
+  const [posts, setPosts] = useState([]);
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch posts: ${response.statusText}`);
-  }
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/post`,
+          {
+            headers: { "Cache-Control": "no-store" },
+          }
+        );
 
-  const posts = await response.json();
-  return posts;
-}
+        if (!response.ok) throw new Error("Failed to fetch posts");
 
-export default async function Home() {
-  const posts = await getPosts();
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <section className="w-full flex-center flex-col mt-10">
       <h1 className="head_text text-center">
-        Post It
-        <br />
+        Post It <br />
         <span className="orange_gradient text-center">Share Your Ideas</span>
       </h1>
       <p className="desc text-center">Share your ideas in the posting app!</p>
