@@ -3,8 +3,22 @@
 import { useEffect, useState } from "react";
 import Posts from "@/components/Posts";
 
+interface Creator {
+  _id: string;
+  username: string;
+  email: string;
+  image: string;
+}
+
+interface Post {
+  _id: string;
+  creator: Creator;
+  post: string;
+  tag: string;
+}
+
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -18,7 +32,7 @@ export default function Home() {
 
         if (!response.ok) throw new Error("Failed to fetch posts");
 
-        const data = await response.json();
+        const data: Post[] = await response.json();
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
