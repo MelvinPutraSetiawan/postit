@@ -8,12 +8,9 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/post`,
-          {
-            headers: { "Cache-Control": "no-store" },
-          }
-        );
+        const response = await fetch(`/api/post`, {
+          headers: { "Cache-Control": "no-store" },
+        });
 
         if (!response.ok) throw new Error("Failed to fetch posts");
 
