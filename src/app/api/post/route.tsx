@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import Post from "@/models/post";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import User from "@/models/user";
 import { connectToDB } from "@/utils/database";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     await connectToDB();
-    const { default: User } = await import("@/models/user");
 
     const posts = await Post.find({}).populate("creator");
 
