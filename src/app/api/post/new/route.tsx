@@ -17,7 +17,7 @@ export const POST = async (request: NextRequest) => {
     });
 
     await newPost.save();
-
+    console.log("Waiting Revalidate");
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

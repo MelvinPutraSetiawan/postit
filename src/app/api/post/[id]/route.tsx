@@ -37,6 +37,7 @@ export const PATCH = async (
 
     await existingPost.save();
 
+    console.log("Waiting Revalidate");
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -59,6 +60,7 @@ export const DELETE = async (
 
     await Post.findByIdAndDelete(params.id);
 
+    console.log("Waiting Revalidate");
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
