@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import Post from "@/models/post";
 import { connectToDB } from "@/utils/database";
+import Post from "@/models/post";
+import { NextResponse } from "next/server";
 
-export const GET = async (): Promise<NextResponse> => {
+export const GET = async () => {
   try {
     await connectToDB();
 
