@@ -11,10 +11,13 @@ export default function Home() {
       try {
         const apiUrl =
           process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-        const response = await fetch(`${apiUrl}/api/post`, {
-          headers: { "Cache-Control": "no-store" },
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${apiUrl}/api/post?timestamp=${Date.now()}`,
+          {
+            headers: { "Cache-Control": "no-store" },
+            cache: "no-store",
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch posts");
 
