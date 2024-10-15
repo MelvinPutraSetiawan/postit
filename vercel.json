@@ -1,6 +1,15 @@
 {
   "routes": [
     {
+      "src": "/api/(.*)",
+      "headers": {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      },
+      "continue": true
+    },
+    {
       "src": "/api/auth/session",
       "headers": {
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
