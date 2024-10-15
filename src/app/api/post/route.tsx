@@ -23,6 +23,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
-    return new NextResponse(`Error: ${error.message}`, { status: 500 });
+    return new NextResponse(`Error: ${error}`, { status: 500 });
   }
 };
