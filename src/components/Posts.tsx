@@ -17,38 +17,14 @@ interface Post {
   tag: string;
 }
 
-interface PostCardListProps {
-  data: Post[];
-  handleTagClick: (tag: string) => void;
-  handleEdit: (post: Post) => void;
-  handleDelete: (post: Post) => void;
+interface PostsProps {
+  initialPosts: Post[]; // Accept initialPosts as a prop
 }
 
-const PostCardList: React.FC<PostCardListProps> = ({
-  data,
-  handleTagClick,
-  handleEdit,
-  handleDelete,
-}) => {
-  return (
-    <div className="mt-16 prompt_layout">
-      {data.map((post) => (
-        <PostCard
-          key={post._id}
-          post={post}
-          handleTagClick={handleTagClick}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
-      ))}
-    </div>
-  );
-};
-
-function Posts() {
+const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
   const [searchText, setSearchText] = useState<string>("");
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -102,9 +78,7 @@ function Posts() {
   const handleDelete = async (post: Post) => {
     console.log(`Delete post with ID: ${post._id}`);
     try {
-      await fetch(`/api/post/${post._id.toString()}`, {
-        method: "DELETE",
-      });
+      await fetch(`/api/post/${post._id.toString()}`, { method: "DELETE" });
       setPosts((prev) => prev.filter((item) => item._id !== post._id));
       setFilteredPosts((prev) => prev.filter((item) => item._id !== post._id));
     } catch (error) {
@@ -124,14 +98,19 @@ function Posts() {
           className="search_input peer text-gray-700"
         />
       </form>
-      <PostCardList
-        data={filteredPosts}
-        handleTagClick={(tag) => console.log(`Tag clicked: ${tag}`)}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
+      <div className="mt-16 prompt_layout">
+        {filteredPosts.map((post) => (
+          <PostCard
+            key={post._id}
+            post={post}
+            handleTagClick={(tag) => console.log(`Tag clicked: ${tag}`)}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+        ))}
+      </div>
     </section>
   );
-}
+};
 
 export default Posts;
