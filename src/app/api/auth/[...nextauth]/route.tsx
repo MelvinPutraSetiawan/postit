@@ -16,10 +16,16 @@ const handler = NextAuth({
         console.error("Session or user email is undefined");
         return session;
       }
-      const sessionUser = await User.findOne({
-        email: session.user.email,
-      });
-      session.user.id = sessionUser._id.toString();
+
+      await connectToDB();
+      const sessionUser = await User.findOne({ email: session.user.email });
+
+      if (sessionUser) {
+        session.user.id = sessionUser._id.toString();
+      } else {
+        console.error("User not found");
+      }
+
       return session;
     },
     async signIn({ profile }) {
@@ -31,16 +37,18 @@ const handler = NextAuth({
           await User.create({
             email: profile?.email,
             username: profile?.name?.replace(" ", "").toLowerCase(),
-            image: (profile as unknown as { picture?: string }).picture || "",
+            image: (profile as { picture?: string }).picture || "",
           });
         }
+
         return true;
       } catch (error) {
-        console.log(error);
+        console.error("Error during sign-in:", error);
+        return false;
       }
-      return false;
     },
   },
 });
 
-export { handler as POST, handler as GET };
+export const POST = handler;
+export const GET = handler;
