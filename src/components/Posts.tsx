@@ -18,7 +18,7 @@ interface Post {
 }
 
 interface PostsProps {
-  initialPosts: Post[]; // Accept initialPosts as a prop
+  initialPosts: Post[];
 }
 
 const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
