@@ -4,18 +4,17 @@ const PostSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: [true, "Creator is required"],
+    required: true,
   },
   post: {
     type: String,
-    required: [true, "Post content is required"],
+    required: true,
   },
   tag: {
     type: String,
-    required: [true, "Tag is required"],
+    required: true,
   },
 });
 
 const Post = models.Post || model("Post", PostSchema);
-
 export default Post;
