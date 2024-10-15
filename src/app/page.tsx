@@ -25,7 +25,7 @@ export default function Home() {
       try {
         const apiUrl =
           process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-        const response = await fetch(`${apiUrl}/api/post`, {
+        const response = await fetch(`${apiUrl}/api/post/reload/1`, {
           method: "GET",
           headers: { "Cache-Control": "no-store" },
         });

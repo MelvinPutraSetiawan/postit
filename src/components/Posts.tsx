@@ -22,14 +22,14 @@ interface PostsProps {
 }
 
 const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
+  const [searchText, setSearchText] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
-  const [searchText, setSearchText] = useState<string>("");
 
   const fetchPosts = useCallback(async () => {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-      const response = await fetch(`${apiUrl}/api/post`, {
+      const response = await fetch(`${apiUrl}/api/post/reload/1`, {
         method: "GET",
         headers: { "Cache-Control": "no-store" },
       });
@@ -48,12 +48,6 @@ const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
 
   useEffect(() => {
     fetchPosts();
-
-    const intervalId = setInterval(() => {
-      fetchPosts();
-    }, 1000);
-
-    return () => clearInterval(intervalId);
   }, [fetchPosts]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +89,7 @@ const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
       <form action="" className="relative w-full flex-center">
         <input
           type="text"
-          placeholder="Search for a tag, username, email, or post"
+          placeholder="Search for a tag, username, email, or prompt"
           value={searchText}
           onChange={handleSearchChange}
           required
