@@ -53,15 +53,24 @@ function Posts() {
   const fetchPosts = useCallback(async () => {
     try {
       const response = await fetch("/api/post", {
-        headers: { "Cache-Control": "no-store" },
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
       });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch posts: ${response.statusText}`);
+      }
+
       const data: Post[] = await response.json();
       setPosts(data);
       setFilteredPosts(data);
     } catch (error) {
-      console.error("Failed to fetch posts:", error);
+      console.error("Fetch error:", error);
     }
   }, []);
+
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
