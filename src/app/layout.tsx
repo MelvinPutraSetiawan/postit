@@ -23,14 +23,17 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <body className={`${inter.variable}  antialiased`}>
-          <header>
+          <header className="fixed top-0 left-0 w-full bg-gray-300 z-20 shadow-md">
             <Nav />
           </header>
 
-          <div className="fixed w-full min-h-[100vh] bg-gray-300 flex justify-center">
+          <div className="fixed w-full min-h-[100vh] bg-gray-300 flex justify-center z-0">
             <div className="gradient" />
           </div>
-          <main className="app">{children}</main>
+
+          <main className="w-full pt-[64px] relative z-10">
+            <div className="app">{children}</div>
+          </main>
         </body>
       </Provider>
     </html>
