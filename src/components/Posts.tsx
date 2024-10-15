@@ -28,11 +28,10 @@ const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
 
   const fetchPosts = useCallback(async () => {
     try {
-      const response = await fetch("/api/post", {
-        headers: {
-          "Cache-Control":
-            "no-store, no-cache, must-revalidate, proxy-revalidate",
-        },
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+      const response = await fetch(`${apiUrl}/api/post`, {
+        headers: { "Cache-Control": "no-store" },
         cache: "no-store",
       });
 

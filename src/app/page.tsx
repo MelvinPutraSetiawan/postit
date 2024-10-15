@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Posts from "@/components/Posts";
 
@@ -8,8 +9,11 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`/api/post`, {
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+        const response = await fetch(`${apiUrl}/api/post`, {
           headers: { "Cache-Control": "no-store" },
+          cache: "no-store",
         });
 
         if (!response.ok) throw new Error("Failed to fetch posts");
