@@ -12,6 +12,10 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
+      if (!session?.user?.email) {
+        console.error("Session or user email is undefined");
+        return session;
+      }
       const sessionUser = await User.findOne({
         email: session.user.email,
       });
