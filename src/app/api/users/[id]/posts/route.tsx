@@ -7,6 +7,7 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   try {
+    console.log("Fetching new data Profile ==============================");
     await connectToDB();
 
     const prompts = await Post.find({ creator: params.id }).populate("creator");

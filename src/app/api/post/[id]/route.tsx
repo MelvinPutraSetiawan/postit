@@ -37,13 +37,6 @@ export const PATCH = async (
 
     await existingPost.save();
 
-    console.log("Waiting Revalidate");
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ path: "/" }),
-    });
-
     return new NextResponse("Successfully updated the post", { status: 200 });
   } catch (error) {
     console.error("Error updating post:", error);
@@ -59,13 +52,6 @@ export const DELETE = async (
     await connectToDB();
 
     await Post.findByIdAndDelete(params.id);
-
-    console.log("Waiting Revalidate");
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ path: "/" }),
-    });
 
     return new NextResponse("Post deleted successfully", { status: 200 });
   } catch (error) {

@@ -4,6 +4,7 @@ import { connectToDB } from "@/utils/database";
 
 export const GET = async () => {
   try {
+    console.log("Fetching new data Home ===========================");
     await connectToDB();
     const posts = await Post.find({}).populate("creator");
 
