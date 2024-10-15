@@ -48,6 +48,12 @@ const Posts: React.FC<PostsProps> = ({ initialPosts }) => {
 
   useEffect(() => {
     fetchPosts();
+
+    const intervalId = setInterval(() => {
+      fetchPosts();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, [fetchPosts]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,40 +1,6 @@
 {
   "routes": [
     {
-      "src": "/api/revalidate",
-      "methods": ["POST"],
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    },
-    {
-      "src": "/_next/revalidate",
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      },
-      "continue": true
-    },
-    {
-      "src": "/api/auth/session",
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    },
-    {
       "src": "/api/auth/(.*)",
       "headers": {
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
@@ -43,8 +9,15 @@
       }
     },
     {
+      "src": "/api/post",
+      "headers": {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    },
+    {
       "src": "/api/(.*)",
-      "methods": ["GET", "POST", "PATCH", "DELETE"],
       "headers": {
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
         "Pragma": "no-cache",
