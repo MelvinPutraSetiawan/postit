@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Post from "@/models/post";
-import User from "@/models/user";
 import { connectToDB } from "@/utils/database";
 
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     await connectToDB();
+    const { default: User } = await import("@/models/user");
 
     const posts = await Post.find({}).populate("creator");
 
@@ -21,6 +21,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
-    return new NextResponse(`Error: ${error}`, { status: 500 });
+    return new NextResponse(`Error: ${error.message}`, { status: 500 });
   }
 };
